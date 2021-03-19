@@ -1,5 +1,6 @@
 import React from 'react';
 import {PluginClient, usePlugin, createState, useValue, Layout} from 'flipper-plugin';
+import {ManagedDataInspector, DetailSidebar} from 'flipper';
 
 type Data = {
   id: string;
@@ -39,13 +40,20 @@ export function Component() {
   const instance = usePlugin(plugin);
   const data = useValue(instance.data);
 
-  return (
-    <Layout.ScrollContainer>
-      {Object.entries(data).map(([id, d]) => (
-        <pre key={id} data-testid={id}>
-          {JSON.stringify(d)}
-        </pre>
-      ))}
-    </Layout.ScrollContainer>
-  );
+   console.log("lf", data)
+   console.log("lf", data[0])
+   if (Object.keys(data).length < 1) {
+      return (
+          <Layout.ScrollContainer>
+                <p>Empty</p>
+          </Layout.ScrollContainer>
+      );
+   } else {
+       return (
+            <Layout.ScrollContainer>
+               <p>De la data</p>
+                 <ManagedDataInspector data={data} expandRoot={true} />
+            </Layout.ScrollContainer>
+       );
+   }
 }
